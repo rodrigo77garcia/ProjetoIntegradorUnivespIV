@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Clientes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+        table {
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px;
+            border-collapse: collapse;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd;
+            font-size: 14px;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+            font-size: 16px;
+        }
+        td {
+            background-color: #f9f9f9;
+        }
+        tr:nth-child(even) {
+            background-color: #f1f1f1;
+        }
+        tr:hover {
+            background-color: #f0f8ff;
+        }
+        .button-group a {
+            display: inline-block;
+            padding: 8px 15px;
+            margin: 5px;
+            border-radius: 4px;
+            text-decoration: none;
+            color: white;
+            background-color: #007bff;
+            transition: background-color 0.3s;
+        }
+        .button-group a:hover {
+            background-color: #0056b3;
+        }
+        .button-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .button-container a {
+            padding: 10px 20px;
+            margin-top: 10px;
+            background: linear-gradient(to right, #007bff, #0056b3);
+            color: white;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+        .button-container a:hover {
+            background: linear-gradient(to right, #0056b3, #003580);
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>Lista de Clientes</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Telefone</th>
+                    <th>Endereço</th>
+                    <th>Data de Cadastro</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cliente in clientes %}
+                <tr>
+                    <td>{{ cliente.id }}</td>
+                    <td>{{ cliente.nome }}</td>
+                    <td>{{ cliente.email }}</td>
+                    <td>{{ cliente.telefone }}</td>
+                    <td>{{ cliente.endereco }}</td>
+                    <td>{{ cliente.data_cadastro }}</td>
+                    <td>
+                        <div class="button-group">
+                            <a href="{{ url_for('routes.update_cliente', id=cliente.id) }}">Editar</a>
+                            <a href="{{ url_for('routes.delete_cliente', id=cliente.id) }}" onclick="confirmDeletion(event, this.href)">Deletar</a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="button-container">
+            <a href="{{ url_for('routes.add_cliente') }}" class="button">Adicionar Novo Cliente</a>
+        </div>
+    </div>
+
+    <script>
+        function confirmDeletion(event, url) {
+            event.preventDefault();
+            if (confirm("Você tem certeza que deseja excluir este cliente?")) {
+                window.location.href = url;
+            }
+        }
+    </script>
+</body>
+</html>

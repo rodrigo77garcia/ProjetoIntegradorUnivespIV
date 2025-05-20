@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciamento Geral</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        h1 {
+            color: #333;
+        }
+        form {
+            background: #fff;
+            padding: 20px;
+            margin: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            width: 300px;
+        }
+        label {
+            display: block;
+            margin-bottom: 6px;
+        }
+        input[type="text"], input[type="date"], textarea {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            border: none;
+            background: #007bff;
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .button-container a.button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 10px;
+            border: none;
+            background: linear-gradient(to right, #007bff, #0056b3);
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+        .button-container a.button:hover {
+            background: linear-gradient(to right, #0056b3, #003580);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Gerenciamento Geral</h1>
+        <div class="button-group">
+            <a href="{{ url_for('routes.add_cliente') }}" class="button">Gerenciar Clientes</a>
+            <a href="{{ url_for('routes.add_financa') }}" class="button">Gerenciar Finanças</a>
+            <a href="{{ url_for('routes.add_organizacao') }}" class="button">Gerenciar Organização</a>
+            <a href="{{ url_for('routes.listar_ferramentas') }}" class="button">Gerenciar Ferramentas</a>
+        </div>
+    </div>
+</body>
+</html>

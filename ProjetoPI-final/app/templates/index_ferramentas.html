@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciamento de Ferramentas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            background-image: url('/static/css/imagem_ferramentas.jpg'); /* Adicione a imagem de fundo */
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        form, .buttons {
+            background: #fff;
+            padding: 20px;
+            margin: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            width: 300px;
+        }
+        label {
+            display: block;
+            margin-bottom: 6px;
+        }
+        input[type="text"], input[type="date"], textarea {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            border: none;
+            background: #007bff;
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Gerenciamento de Ferramentas</h1>
+
+    <h2>Adicionar Nova Ferramenta</h2>
+    <form id="addForm" method="POST" action="/add">
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" required><br><br>
+        
+        <label for="local">Local:</label>
+        <input type="text" id="local" name="local"><br><br>
+        
+        <label for="descricao">Descrição:</label>
+        <textarea id="descricao" name="descricao" rows="4"></textarea><br><br>
+        
+        <label for="marca">Marca:</label>
+        <input type="text" id="marca" name="marca"><br><br>
+        
+        <label for="data_do_emprestimo">Data de Empréstimo:</label>
+        <input type="date" id="data_do_emprestimo" name="data_do_emprestimo"><br><br>
+        
+        <label for="data_da_devolucao">Data de Devolução:</label>
+        <input type="date" id="data_da_devolucao" name="data_da_devolucao"><br><br>
+        
+        <label for="nome_funcionario">Nome do Funcionário:</label>
+        <input type="text" id="nome_funcionario" name="nome_funcionario" required><br><br>
+        
+        <label for="setor_de_trabalho">Setor de Trabalho:</label>
+        <input type="text" id="setor_de_trabalho" name="setor_de_trabalho"><br><br>
+        
+        <label for="imagem">Imagem:</label>
+        <input type="text" id="imagem" name="imagem"><br><br>
+
+        <button type="submit">Adicionar Ferramenta</button>
+    </form>
+
+    <div class="buttons">
+        <h2>Outras Funcionalidades</h2>
+        <button onclick="window.location.href='/ferramentas/listar'">Listar Ferramentas</button>
+        <button onclick="window.location.href='/update/1'">Atualizar Ferramenta</button>
+        <button onclick="window.location.href='/delete/1'">Deletar Ferramenta</button>
+    </div>
+</body>
+</html>

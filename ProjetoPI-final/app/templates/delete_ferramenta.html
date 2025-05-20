@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deletar Ferramenta</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .container {
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            text-align: center;
+            width: 300px;
+        }
+        h1 {
+            color: #333;
+        }
+        p {
+            margin: 15px 0;
+            color: #666;
+        }
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        .button-group a, .button-group button {
+            text-decoration: none;
+            padding: 10px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100px;
+            text-align: center;
+        }
+        .button-group a:hover, .button-group button:hover {
+            background-color: #0056b3;
+        }
+        .button-group a {
+            background-color: #6c757d;
+        }
+        .button-group a:hover {
+            background-color: #5a6268;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Confirmar Deleção</h1>
+        <p>Você tem certeza que deseja deletar a ferramenta:</p>
+        <p><strong>{{ ferramenta['nome'] }}</strong></p>
+        <p>Esta ação não pode ser desfeita.</p>
+        <form method="POST" action="{{ url_for('routes.delete_ferramenta', id=ferramenta['id']) }}">
+            <div class="button-group">
+                <button type="submit">Confirmar</button>
+                <a href="{{ url_for('routes.listar_ferramentas') }}">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

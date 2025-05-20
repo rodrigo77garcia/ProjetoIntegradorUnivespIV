@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Gerenciamento</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            background-image: url('/static/css/imagem_fundo.jpg'); /* Altere para a imagem desejada */
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            color: #007bff;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px;
+        }
+        .button {
+            background: #007bff;
+            color: #fff;
+            padding: 15px 30px;
+            margin: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            text-align: center;
+            width: 250px;
+            transition: background 0.3s;
+        }
+        .button:hover {
+            background: #0056b3;
+        }
+        footer {
+            margin-top: 20px;
+            text-align: center;
+            color: #555;
+        }
+        #chat-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 16px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+        #chat-container {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 300px;
+            display: none;
+            z-index: 1000;
+        }
+        #chat-box {
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            display: flex;
+            flex-direction: column 
+        }
+        #chat-messages {
+            height: 200px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            padding: 8px;
+            margin-bottom: 8px;
+            font-size: 14px;
+            background: #f9f9f9;
+        }
+        #user-input {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 6px;
+        }
+        #chat-box button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #chat-box button:hover {
+            background-color: #0056b3;
+        }
+            
+    </style>
+</head>
+<body>
+    <h1>Painel de Gerenciamento</h1>
+    <div class="container">
+        <button class="button" onclick="window.location.href='/ferramentas'">Gerenciar Ferramentas</button>
+        <button class="button" onclick="window.location.href='/financas'">Gestão de Finanças</button>
+        <button class="button" onclick="window.location.href='/clientes'">Gerenciar Clientes</button>
+        <button class="button" onclick="window.location.href='/organizacao'">Organização</button>
+    </div>
+    <footer>
+        <p>&copy; 2025 Projeto Integrador III - Todos os direitos reservados.</p>
+    </footer>
+
+    <!-- Botão de Chat-->
+    <button id="chat-toggle" onclick="toggleChat()">💬</button>
+
+    <!-- Caixa de Chat -->
+    <div id="chat-container">
+        <div id="chat-box">
+            <div id="chat-messages"></div>
+            <input type="text" id="user-input" placeholder="Digite sua pergunta..." />
+            <button onclick="sendMessage()">Enviar</button>
+        </div>
+    </div>
+    <!-- Script para o Chat -->
+    <script>
+        function toggleChat() {
+            const container = document.getElementById('chat-container');
+            container.style.display = container.style.display === 'none' ? 'block' : 'none';
+            
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('user-input');
+            const message = input.value.trim();
+            if(!message) return;
+
+            const chatMessages = document.getElementById('chat-messages');
+            chatMessages.innerHTML += `<div><strong>Você:</strong> ${message}</div>`;
+            input.value = "";
+
+            const response = await fetch('/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ message })
+            });
+
+            const data = await response.json();
+            chatMessages.innerHTML += `<div><strong>IA:</strong> ${data.response}</div>`;
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+    </script>
+        
+</body>
+</html>

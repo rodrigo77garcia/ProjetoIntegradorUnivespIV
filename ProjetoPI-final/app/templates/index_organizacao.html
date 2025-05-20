@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organização</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script>
+        function redirecionarParaAdicionar(tipo) {
+            // Verifica a URL da página atual e redireciona para a rota de adicionar correspondente
+            switch (tipo) {
+                case 'organizacao':
+                    if (window.location.pathname === "{{ url_for('routes.organizacao') }}") {
+                        window.location.href = "{{ url_for('routes.add_organizacao') }}";
+                    }
+                    break;
+                case 'ferramentas':
+                    if (window.location.pathname === "{{ url_for('routes.organizacao') }}") {
+                        window.location.href = "{{ url_for('routes.add_ferramenta') }}";
+                    }
+                    break;
+                case 'clientes':
+                    if (window.location.pathname === "{{ url_for('routes.organizacao') }}") {
+                        window.location.href = "{{ url_for('routes.add_cliente') }}";
+                    }
+                    break;
+                case 'financas':
+                    if (window.location.pathname === "{{ url_for('routes.organizacao') }}") {
+                        window.location.href = "{{ url_for('routes.add_financas') }}";
+                    }
+                    break;
+            }
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Gestão da Organização</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('routes.ferramentas') }}">Ferramentas</a></li>
+                <li><a href="{{ url_for('routes.financas') }}">Finanças</a></li>
+                <li><a href="{{ url_for('routes.clientes') }}">Clientes</a></li>
+                <li><a href="{{ url_for('routes.organizacao') }}">Organização</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <h2>Organização de Recursos</h2>
+        <p>Aqui você pode gerenciar a organização de recursos da sua empresa.</p>
+        <a href="#" onclick="redirecionarParaAdicionar('organizacao')">Adicionar Recurso na Organização</a>
+        
+        <!-- Aqui você pode adicionar mais informações ou tabelas conforme a necessidade -->
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Sua Empresa</p>
+    </footer>
+</body>
+</html>

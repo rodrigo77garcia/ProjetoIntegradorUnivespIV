@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listar Ferramentas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+        table {
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px;
+            border-collapse: collapse;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd;
+            font-size: 14px;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+            font-size: 16px;
+        }
+        td {
+            background-color: #f9f9f9;
+        }
+        tr:nth-child(even) {
+            background-color: #f1f1f1;
+        }
+        tr:hover {
+            background-color: #f0f8ff;
+        }
+        .button-group a {
+            display: inline-block;
+            padding: 8px 15px;
+            margin: 5px;
+            border-radius: 4px;
+            text-decoration: none;
+            color: white;
+            background-color: #007bff;
+            transition: background-color 0.3s;
+        }
+        .button-group a:hover {
+            background-color: #0056b3;
+        }
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .button-container a {
+            padding: 10px 20px;
+            margin-top: 10px;
+            background: linear-gradient(to right, #007bff, #0056b3);
+            color: white;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+        .button-container a:hover {
+            background: linear-gradient(to right, #0056b3, #003580);
+        }
+        .button-container {
+            margin-top: 30px;
+        }
+    </style>
+    <script>
+        function confirmDeletion(event, url) {
+            event.preventDefault();
+            if (confirm("Você tem certeza que deseja excluir esta ferramenta?")) {
+                window.location.href = url;
+            }
+        }
+    </script>
+</head>
+<body>
+    <div>
+        <h1>Lista de Ferramentas</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Local</th>
+                    <th>Descrição</th>
+                    <th>Marca</th>
+                    <th>Data de Empréstimo</th>
+                    <th>Data de Devolução</th>
+                    <th>Nome do Funcionário</th>
+                    <th>Setor de Trabalho</th>
+                    <th>Imagem</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ferramenta in ferramentas %}
+                <tr>
+                    <td>{{ ferramenta.id }}</td>
+                    <td>{{ ferramenta.nome }}</td>
+                    <td>{{ ferramenta.local }}</td>
+                    <td>{{ ferramenta.descricao }}</td>
+                    <td>{{ ferramenta.marca }}</td>
+                    <td>{{ ferramenta.data_do_emprestimo.strftime('%Y-%m-%d') if ferramenta.data_do_emprestimo else '' }}</td>
+                    <td>{{ ferramenta.data_da_devolucao.strftime('%Y-%m-%d') if ferramenta.data_da_devolucao else '' }}</td>
+                    <td>{{ ferramenta.nome_funcionario }}</td>
+                    <td>{{ ferramenta.setor_de_trabalho }}</td>
+                    <td>{{ ferramenta.imagem }}</td>
+                    <td>
+                        <div class="button-group">
+                            <a href="{{ url_for('routes.update_ferramenta', id=ferramenta.id) }}">Atualizar</a>
+                            <a href="{{ url_for('routes.delete_ferramenta', id=ferramenta.id) }}" onclick="confirmDeletion(event, this.href)">Deletar</a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="button-container">
+            <a href="{{ url_for('routes.index') }}" class="button">Gerenciamento de Ferramentas</a>
+            <a href="/add" class="button">Adicionar Ferramenta</a>
+        </div>
+    </div>
+</body>
+</html>
