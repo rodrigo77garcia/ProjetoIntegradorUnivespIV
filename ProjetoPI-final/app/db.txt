@@ -1,27 +1,20 @@
 import mysql.connector
 from flask import current_app, g
-from sqlalchemy.engine.url import make_url
-import os
-
 
 def init_db():
-    """Cria o banco e as tabelas se não existirem."""
     try:
-        # Extrai a DATABASE_URL do ambiente ou Flask config
-        db_url = current_app.config.get('SQLALCHEMY_DATABASE_URI') or os.getenv('DATABASE_URL')
-        if not db_url:
-            raise ValueError("DATABASE_URL não está definida.")
-
-        url = make_url(db_url)
-
         db = mysql.connector.connect(
-            host=url.host,
-            port=url.port or 3306,
-            user=url.username,
-            password=url.password,
-            database=url.database
+            host=current_app.config['MYSQL_HOST'],
+            user=current_app.config['MYSQL_USER'],
+            password=current_app.config['MYSQL_PASSWORD']
         )
         cursor = db.cursor()
+
+        # Criar banco de dados
+        cursor.execute(f"CREATE DATABASE IF NOT EXISTS {current_app.config['MYSQL_DB']}")
+
+        # Selecionar o banco de dados
+        db.database = current_app.config['MYSQL_DB']
 
         # Criar tabela 'ferramentas'
         cursor.execute('''CREATE TABLE IF NOT EXISTS ferramentas (
@@ -37,7 +30,7 @@ def init_db():
                             imagem VARCHAR(255)
                         )''')
 
-        # Tabela clientes
+        # Criar tabela 'clientes'
         cursor.execute('''CREATE TABLE IF NOT EXISTS clientes (
                             id INT AUTO_INCREMENT PRIMARY KEY,
                             nome VARCHAR(255),
@@ -46,7 +39,7 @@ def init_db():
                             endereco VARCHAR(255)
                         )''')
 
-        # Tabela finanças
+        # Criar tabela 'financas'
         cursor.execute('''CREATE TABLE IF NOT EXISTS financas (
                             id INT AUTO_INCREMENT PRIMARY KEY,
                             data DATE,
@@ -55,7 +48,7 @@ def init_db():
                             tipo ENUM('Entrada', 'Saída')
                         )''')
 
-        # Tabela organizacao
+        # Criar tabela 'organizacao'
         cursor.execute('''CREATE TABLE IF NOT EXISTS organizacao (
                             id INT AUTO_INCREMENT PRIMARY KEY,
                             nome_departamento VARCHAR(255),
@@ -63,35 +56,25 @@ def init_db():
                             telefone_departamento VARCHAR(15)
                         )''')
 
+        # Confirma as alterações no banco de dados
         db.commit()
         cursor.close()
         db.close()
         print("Banco de dados e tabelas criados com sucesso.")
-    except Exception as err:
-        print(f"Erro ao criar banco de dados: {err}")
-
+    except mysql.connector.Error as err:
+        print(f"Erro: {err}")
 
 def get_db():
-    """Retorna uma conexão reutilizável com o banco."""
     if 'db' not in g:
-        db_url = current_app.config.get('SQLALCHEMY_DATABASE_URI') or os.getenv('DATABASE_URL')
-        if not db_url:
-            raise ValueError("DATABASE_URL não está definida.")
-
-        url = make_url(db_url)
-
         g.db = mysql.connector.connect(
-            host=url.host,
-            port=url.port or 3306,
-            user=url.username,
-            password=url.password,
-            database=url.database
+            host=current_app.config['MYSQL_HOST'],
+            user=current_app.config['MYSQL_USER'],
+            password=current_app.config['MYSQL_PASSWORD'],
+            database=current_app.config['MYSQL_DB']
         )
     return g.db
 
-
 def close_db(e=None):
-    """Fecha a conexão com o banco ao final da requisição."""
     db = g.pop('db', None)
     if db is not None:
         db.close()
