@@ -24,7 +24,7 @@
         table {
             width: 90%;
             max-width: 1200px;
-            margin: 20px;
+            margin: 20px auto;
             border-collapse: collapse;
             background: #fff;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -79,12 +79,23 @@
         .button-container a:hover {
             background: linear-gradient(to right, #0056b3, #003580);
         }
+        .flashes {
+            list-style: none;
+            padding: 10px;
+            margin: 10px auto;
+            width: 90%;
+            max-width: 600px;
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
     <div>
         <h1>Lista de Finanças</h1>
-
 
         {% with messages = get_flashed_messages() %}
             {% if messages %}
@@ -102,7 +113,7 @@
                     <th>ID</th>
                     <th>Tipo</th>
                     <th>Descrição</th>
-                    <th>Valor</th>
+                    <th>Valor (R$)</th>
                     <th>Data</th>
                     <th>Cliente</th>
                     <th>Ações</th>
@@ -114,8 +125,8 @@
                     <td>{{ financa.id }}</td>
                     <td>{{ financa.tipo }}</td>
                     <td>{{ financa.descricao }}</td>
-                    <td>{{ financa.valor }}</td>
-                    <td>{{ financa.data }}</td>
+                    <td>R$ {{ "%.2f"|format(financa.valor) }}</td>
+                    <td>{{ financa.data.strftime('%d/%m/%Y') }}</td>
                     <td>{{ financa.cliente_nome }}</td>
                     <td>
                         <div class="button-group">
@@ -127,8 +138,9 @@
                 {% endfor %}
             </tbody>
         </table>
+        
         <div class="button-container">
-            <a href="{{ url_for('routes.add_financas') }}" class="button">Adicionar Nova Finança</a>
+            <a href="{{ url_for('routes.add_financas') }}">Adicionar Nova Finança</a>
         </div>
     </div>
 

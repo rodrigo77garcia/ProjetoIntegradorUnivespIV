@@ -304,8 +304,20 @@ def listar_clientesID(id):
 # Rota para adicionar um registro financeiro
 
 
+def get_financas():
+    db = get_db()
+    cursor = db.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM financas")
+    financas = cursor.fetchall()
+    cursor.close()
+    return financas
+
+
 @bp.route('/add_financas', methods=['GET', 'POST'])
 def add_financas():
+    mensagem = None
+    tipo = None
+
     if request.method == 'POST':
         descricao = request.form.get('descricao')
         valor = request.form.get('valor')
@@ -323,15 +335,19 @@ def add_financas():
         try:
             cursor.execute(query, (descricao, valor, data))
             db.commit()
-            flash('Finança adicionada com sucesso!', 'success')
+            mensagem = "Registro financeiro adicionado com sucesso"
+            tipo = "success"
         except Exception as e:
             db.rollback()
             print(f"Error: {e}")
-            return jsonify({"message": "Erro ao adicionar o registro financeiro", "error": str(e)}), 500
+            mensagem = "Erro ao adicionar o registro financeiro"
+            tipo = "error"
         finally:
             cursor.close()
 
-        return redirect(url_for('routes.listar_financas'))
+        financas = get_financas()
+
+        return render_template('listar_financas.html', financas=financas, mensagem=mensagem, tipo=tipo)
 
     return render_template('adicionar_financa.html')
 
@@ -340,11 +356,7 @@ def add_financas():
 
 @bp.route('/listar_financas', methods=['GET'])
 def listar_financas():
-    db = get_db()
-    cursor = db.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM financas")
-    financas = cursor.fetchall()
-    cursor.close()
+    financas = get_financas()
 
     if request.headers.get("Accept") == "application/json":
         return jsonify(financas)
@@ -363,7 +375,8 @@ def update_financa(id):
 
     if not financa:
         cursor.close()
-        return redirect(url_for('routes.listar_financas'))
+        financas = get_financas()
+        return render_template('listar_financas.html', financas=financas, mensagem="Registro financeiro não encontrado", tipo="error")
 
     if request.method == 'POST':
         descricao = request.form.get('descricao')
@@ -377,10 +390,22 @@ def update_financa(id):
         SET descricao = %s, valor = %s, data = %s
         WHERE id = %s
         """
-        cursor.execute(query, (descricao, valor, data, id))
-        db.commit()
-        cursor.close()
-        return redirect(url_for('routes.listar_financas'))
+        try:
+            cursor.execute(query, (descricao, valor, data, id))
+            db.commit()
+            mensagem = "Registro financeiro atualizado com sucesso"
+            tipo = "success"
+        except Exception as e:
+            db.rollback()
+            print(f"Error: {e}")
+            mensagem = f'Erro ao atualizar o registro financeiro: {e}'
+            tipo = "error"
+        finally:
+            cursor.close()
+
+        financas = get_financas()
+        return render_template('listar_financas.html', financas=financas, mensagem=mensagem, tipo=tipo)
+    # Se não for um POST, apenas renderiza o formulário de atualização
 
     return render_template('atualizar_financa.html', financa=financa)
 
@@ -396,13 +421,26 @@ def delete_financa(id):
 
     if not financa:
         cursor.close()
-        return redirect(url_for('routes.listar_financas'))
+        financas = get_financas()
+        return render_template('listar_financas.html', financas=financas, mensagem="Registro financeiro não encontrado", tipo="error")
+    # Se o registro não for encontrado, redireciona para a lista de finanças
 
     if request.method == 'POST':
-        cursor.execute("DELETE FROM financas WHERE id = %s", (id,))
-        db.commit()
-        cursor.close()
-        return redirect(url_for('routes.listar_financas'))
+        try:
+            cursor.execute("DELETE FROM financas WHERE id = %s", (id,))
+            db.commit()
+            mensagem = "Registro financeiro deletado com sucesso"
+            tipo = "success"
+        except Exception as e:
+            db.rollback()
+            print(f"Error: {e}")
+            mensagem = f'Erro ao deletar o registro financeiro: {e}'
+            tipo = "error"
+        finally:
+            cursor.close()
+
+        financas = get_financas()
+        return render_template('listar_financas.html', financas=financas, mensagem=mensagem, tipo=tipo)
 
     cursor.close()
     return render_template('delete_financa.html', financa=financa)
