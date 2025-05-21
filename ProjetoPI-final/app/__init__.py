@@ -10,7 +10,9 @@ def create_app():
     app = Flask(__name__)
 
     # Configurações do banco de dados
+    db_uri = os.getenv('DATABASE_URL')
     app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
+    print("DEBUG: DATABASE_URL =", db_uri)  # <-- Linha adicionada
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     # Inicializa a extensão SQLAlchemy
