@@ -16,7 +16,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: '3.13.2'
 
       - name: Install dependencies
         run: |
@@ -30,6 +30,11 @@ jobs:
           token: ${{ secrets.RAILWAY_TOKEN }}
 
       - name: Deploy to Railway
+        run: railway run -- flask db upgrade
+        env:
+          RAILWAY_ENV: production
+      
+      - name: Apply database migrations
         run: railway run -- flask db upgrade
         env:
           RAILWAY_ENV: production

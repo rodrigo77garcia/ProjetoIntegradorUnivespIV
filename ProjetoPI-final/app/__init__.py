@@ -36,7 +36,6 @@ def create_app():
             # Ativa o contexto da app
             with app.app_context():
                 # Rode o equivalente a `flask db migrate` e `flask db upgrade`
-                run_migrate(message="Auto migration on first request")
                 upgrade()
                 print("Migrações aplicadas com sucesso!")
         except Exception as e:
@@ -44,7 +43,7 @@ def create_app():
 
     # Registro dos blueprints
     with app.app_context():
-        from .models import Ferramenta, Cliente, Financa, Organizacao
+        from .models import Ferramentas, Clientes, Financas, Organizacao
 
         from .routes import bp as routes_bp
         app.register_blueprint(routes_bp, url_prefix='/')

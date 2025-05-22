@@ -2,7 +2,7 @@ from .extensions import db
 from sqlalchemy import Enum
 import enum
 
-class Ferramenta(db.Model):
+class Ferramentas(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(255))
     local = db.Column(db.String(255))
@@ -15,7 +15,7 @@ class Ferramenta(db.Model):
     imagem = db.Column(db.String(255))
 
 
-class Cliente(db.Model):
+class Clientes(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(255))
     telefone = db.Column(db.String(15))
@@ -26,7 +26,7 @@ class TipoCliente(enum.Enum):
     Entrada = 'Entrada'
     Saída = 'Saída'
 
-class Financa(db.Model):
+class Financas(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     data = db.Column(db.Date)
     descricao = db.Column(db.Text)
