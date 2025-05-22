@@ -19,32 +19,20 @@ def create_app():
 
     # Inicializa extensões
     db.init_app(app)
-    migrate.init_app(app, db)
+    migrate.init_app(app, db)  # Se você não usa Flask-Migrate, pode remover esta linha
 
-    app.config['MIGRATIONS_APPLIED'] = False
-
-    # Executa migrações na primeira requisição
-    @app.before_request
-    def apply_migrations():
-        if app.config['MIGRATIONS_APPLIED']:
-            return
-
-        try:
-            print("Aplicando migrações automaticamente...")
-            from flask_migrate import upgrade, migrate as run_migrate
-
-            # Ativa o contexto da app
-            with app.app_context():
-                # Rode o equivalente a `flask db migrate` e `flask db upgrade`
-                upgrade()
-                print("Migrações aplicadas com sucesso!")
-        except Exception as e:
-            print(f"Erro ao aplicar migrações: {e}")
-
-    # Registro dos blueprints
     with app.app_context():
+        # Importe seus modelos aqui 👇
         from .models import Ferramenta, Cliente, Financa, Organizacao
 
+        # Cria todas as tabelas, se ainda não existirem
+        try:
+            db.create_all()
+            print("Tabelas criadas com sucesso (ou já existiam)")
+        except Exception as e:
+            print(f"Erro ao criar tabelas: {e}")
+
+        # Registre seus blueprints aqui 👇
         from .routes import bp as routes_bp
         app.register_blueprint(routes_bp, url_prefix='/')
 
