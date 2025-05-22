@@ -48,7 +48,7 @@ def add_ferramenta():
     imagem_file = request.files.get('imagem')
 
     # Debug: Print values to check if they are correctly received
-    print(f"Received: nome={nome}, local={local}, descricao={descricao}, marca={marca}, data_do_emprestimo={data_do_emprestimo_str}, data_da_devolucao={data_da_devolucao_str}, nome_funcionario={nome_funcionario}, setor_de_trabalho={setor_de_trabalho}, imagem={imagem}")
+    print(f"Received: nome={nome}, local={local}, descricao={descricao}, marca={marca}, data_do_emprestimo={data_do_emprestimo_str}, data_da_devolucao={data_da_devolucao_str}, nome_funcionario={nome_funcionario}, setor_de_trabalho={setor_de_trabalho}, imagem={imagem_file}")
 
     data_do_emprestimo = datetime.strptime(
         data_do_emprestimo_str, '%Y-%m-%d') if data_do_emprestimo_str else None
