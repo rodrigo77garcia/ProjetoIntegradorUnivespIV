@@ -10,6 +10,7 @@ pytest-cov==6.1.1
 Flask-SQLAlchemy
 pymysql
 gunicorn
+Flask-Migrate
 
 
 

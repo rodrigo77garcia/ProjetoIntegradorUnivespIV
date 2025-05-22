@@ -1,0 +1,35 @@
+name: Deploy to Railway + Run Migrations
+
+on:
+  push:
+    branches:
+      - main  # ou qualquer branch usada para produção
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Configure Railway CLI
+        uses: railwayapp/railway-cli-github-action@v1
+        with:
+          projectid: ${{ secrets.RAILWAY_PROJECT_ID }}
+          token: ${{ secrets.RAILWAY_TOKEN }}
+
+      - name: Deploy to Railway
+        run: railway run -- flask db upgrade
+        env:
+          RAILWAY_ENV: production
