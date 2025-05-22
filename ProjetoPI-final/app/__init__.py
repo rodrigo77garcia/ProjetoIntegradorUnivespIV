@@ -2,6 +2,8 @@ from flask import Flask
 from .extensions import db
 from dotenv import load_dotenv
 import os
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
 def create_app():
     # Carregar variáveis do .env

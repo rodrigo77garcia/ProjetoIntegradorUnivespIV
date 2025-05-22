@@ -31,11 +31,18 @@ def chat():
     }
 
     try:
-        response = requests.post("https://api.together.xyz/v1/chat/completions", headers=headers, json=data)
+        response = requests.post("https://api.together.xyz/v1/chat/completions", headers=headers, json=data, timeout=10)
         response.raise_for_status()
         reply = response.json()['choices'][0]['message']['content']
         return jsonify({"response": reply})
+    except requests.exceptions.Timeout:
+        return jsonify({"error": "A requisição excedeu o tempo limite."}), 504
+
+    except requests.exceptions.ConnectionError:
+        return jsonify({"error": "Erro de conexão com a API externa."}), 502
+
     except requests.exceptions.RequestException as e:
-        return jsonify({"error": str(e)}), 500
-    except KeyError:
+        return jsonify({"error": f"Erro na requisição: {str(e)}"}), 500
+
+    except (KeyError, IndexError):
         return jsonify({"error": "Erro ao processar a resposta da API."}), 500
