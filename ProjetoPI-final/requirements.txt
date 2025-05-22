@@ -11,6 +11,7 @@ Flask-SQLAlchemy
 pymysql
 gunicorn
 Flask-Migrate
+cryptography
 
 
 

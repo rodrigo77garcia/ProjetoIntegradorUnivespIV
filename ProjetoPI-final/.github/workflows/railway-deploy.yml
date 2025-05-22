@@ -34,4 +34,7 @@ jobs:
         env:
           RAILWAY_ENV: production
       
-      
+      - name: Apply database migrations
+        run: railway run -- flask db upgrade
+        env:
+          RAILWAY_ENV: production
