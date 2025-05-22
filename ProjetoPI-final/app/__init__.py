@@ -21,9 +21,14 @@ def create_app():
     db.init_app(app)
     migrate.init_app(app, db)
 
+    app.config['MIGRATIONS_APPLIED'] = False
+
     # Executa migrações na primeira requisição
-    @app.before_first_request
+    @app.before_request
     def apply_migrations():
+        if app.config['MIGRATIONS_APPLIED']:
+            return
+
         try:
             print("Aplicando migrações automaticamente...")
             from flask_migrate import upgrade, migrate as run_migrate
