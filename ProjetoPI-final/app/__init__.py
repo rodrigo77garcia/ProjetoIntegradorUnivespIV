@@ -1,5 +1,5 @@
 from flask import Flask
-from .extensions import db
+from .extensions import db, migrate
 from dotenv import load_dotenv
 import os
 from flask_sqlalchemy import SQLAlchemy
@@ -19,6 +19,8 @@ def create_app():
 
     # Inicializa a extensão SQLAlchemy
     db.init_app(app)
+    # Inicializa a extensão Migrate
+    migrate.init_app(app, db)
 
     # Registro dos blueprints
     with app.app_context():
