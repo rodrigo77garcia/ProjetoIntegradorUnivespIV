@@ -11,7 +11,7 @@ Flask-SQLAlchemy
 pymysql
 gunicorn
 Flask-Migrate
-mysqlclient
+
 
 
 
