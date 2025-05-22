@@ -1,4 +1,6 @@
 from .extensions import db
+from sqlalchemy import Enum
+import enum
 
 class Ferramenta(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -20,13 +22,16 @@ class Cliente(db.Model):
     email = db.Column(db.String(255))
     endereco = db.Column(db.String(255))
 
+class TipoCliente(enum.Enum):
+    Entrada = 'Entrada'
+    Saída = 'Saída'
 
 class Financa(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     data = db.Column(db.Date)
     descricao = db.Column(db.Text)
     valor = db.Column(db.Numeric(10, 2))
-    tipo = db.Column(db.Enum('Entrada', 'Saída'))
+    tipo = db.Column(db.Enum(TipoCliente), nullable=False)
 
 
 class Organizacao(db.Model):

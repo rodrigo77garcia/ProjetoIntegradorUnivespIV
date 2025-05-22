@@ -3,7 +3,6 @@ from flask import Blueprint, request, jsonify, render_template, current_app, url
 from .db import get_db
 from datetime import datetime
 import logging
-from flask import flash
 import os
 from werkzeug.utils import secure_filename
 
@@ -31,6 +30,8 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
 
 # Rota para adicionar uma ferramenta
 
@@ -90,7 +91,7 @@ def add_ferramenta():
 @bp.route('/update/<int:id>', methods=['GET', 'POST'])
 def update_ferramenta(id):
     db = get_db()
-    cursor = db.cursor()
+    cursor = db.cursor(dictionary=True)
     cursor.execute('SELECT * FROM ferramentas WHERE id = %s', (id,))
     ferramenta = cursor.fetchone()
 
@@ -108,7 +109,16 @@ def update_ferramenta(id):
         data_da_devolucao_str = request.form.get('data_da_devolucao')
         nome_funcionario = request.form.get('nome_funcionario')
         setor_de_trabalho = request.form.get('setor_de_trabalho')
-        imagem = request.form.get('imagem')
+        imagem_file = request.form.get('imagem')
+        imagem_path = ferramenta['imagem']
+
+        if imagem_file and allowed_file(imagem_file.filename):
+            filename = secure_filename(imagem_file.filename)
+            # Cria o diretório se não existir
+            os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+            full_path = os.path.join(UPLOAD_FOLDER, filename)
+            imagem_file.save(full_path)
+            imagem_path = full_path
 
         data_do_emprestimo = datetime.strptime(
             data_do_emprestimo_str, '%Y-%m-%d') if data_do_emprestimo_str else None
@@ -121,7 +131,7 @@ def update_ferramenta(id):
         WHERE id = %s
         """
         cursor.execute(query, (nome, local, descricao, marca, data_do_emprestimo,
-                       data_da_devolucao, nome_funcionario, setor_de_trabalho, imagem, id))
+                       data_da_devolucao, nome_funcionario, setor_de_trabalho, imagem_path, id))
         db.commit()
         cursor.close()
         return redirect(url_for('routes.listar_ferramentas'))
