@@ -43,7 +43,7 @@ def create_app():
 
     # Registro dos blueprints
     with app.app_context():
-        from .models import Ferramentas, Clientes, Financas, Organizacao
+        from .models import Ferramenta, Cliente, Financa, Organizacao
 
         from .routes import bp as routes_bp
         app.register_blueprint(routes_bp, url_prefix='/')
