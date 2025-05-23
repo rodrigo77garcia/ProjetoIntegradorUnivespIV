@@ -84,12 +84,15 @@ def create_tables():
 
     # Tabela 'organizacao'
     create_organizacao_table = """
-    CREATE TABLE IF NOT EXISTS organizacao (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        nome_departamento VARCHAR(50),
-        responsavel VARCHAR(50),
-        telefone_departamento VARCHAR(15)
-    )
+    CREATE TABLE organizacao (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    cnpj VARCHAR(20),
+    endereco VARCHAR(200),
+    telefone VARCHAR(20),
+    email VARCHAR(100),
+    decricao TEXT
+    );
     """
     cursor.execute(create_organizacao_table)
 

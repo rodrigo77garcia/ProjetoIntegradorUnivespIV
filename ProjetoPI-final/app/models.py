@@ -40,6 +40,10 @@ class Financa(db.Model):
 class Organizacao(db.Model):
     __tablename__ = 'organizacao'
     id = db.Column(db.Integer, primary_key=True)
-    nome_departamento = db.Column(db.String(255))
-    responsavel = db.Column(db.String(255))
-    telefone_departamento = db.Column(db.String(15))
+    nome = db.Column(db.String(255))
+    cnpj = db.Column(db.String(20))
+    endereco = db.Column(db.String(255))
+    telefone = db.Column(db.String(20))
+    email = db.Column(db.String(255))
+    descricao = db.Column(db.Text)
+    
