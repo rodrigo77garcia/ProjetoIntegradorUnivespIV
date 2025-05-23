@@ -495,21 +495,21 @@ def teardown_request(exception):
 @bp.route('/add_organizacao', methods=['GET', 'POST'])
 def add_organizacao():
     if request.method == 'POST':
-        descricao = request.form.get('descricao')
-        valor = request.form.get('valor')
-        data_str = request.form.get('data')
+        nome_departamento = request.form['nome_departamento']
+        responsavel = request.form['responsavel']
+        telefone_departamento = request.form.get('telefone_departamento')
 
-        data = datetime.strptime(data_str, '%Y-%m-%d') if data_str else None
+    
 
         db = get_db()
         cursor = db.cursor()
 
         query = """
-        INSERT INTO organizacao (descricao, valor, data)
+        INSERT INTO organizacao (nome_departamento, responsavel, telefone_departamento)
         VALUES (%s, %s, %s)
         """
         try:
-            cursor.execute(query, (descricao, valor, data))
+            cursor.execute(query, (nome_departamento, responsavel, telefone_departamento))
             db.commit()
         except Exception as e:
             db.rollback()
@@ -550,18 +550,18 @@ def update_organizacao(id):
         return redirect(url_for('routes.listar_organizacao'))
 
     if request.method == 'POST':
-        descricao = request.form.get('descricao')
-        valor = request.form.get('valor')
-        data_str = request.form.get('data')
+        nome_departamento = request.form['nome_departamento']
+        responsavel = request.form['responsavel']
+        telefone_departamento = request.form.get('telefone_departamento')
 
-        data = datetime.strptime(data_str, '%Y-%m-%d') if data_str else None
+        
 
         query = """
         UPDATE organizacao
-        SET descricao = %s, valor = %s, data = %s
+        SET nome_departamento = %s, responsavel = %s, telefone_departamento = %s
         WHERE id = %s
         """
-        cursor.execute(query, (descricao, valor, data, id))
+        cursor.execute(query, (nome_departamento, responsavel, telefone_departamento, id))
         db.commit()
         cursor.close()
         return redirect(url_for('routes.listar_organizacao'))
