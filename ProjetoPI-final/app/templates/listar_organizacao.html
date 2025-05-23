@@ -78,23 +78,18 @@
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Nome</th>
-                <th>CNPJ</th>
-                <th>Endereço</th>
+                <th>Nome do Departamento</th>
+                <th>Responsável</th>
                 <th>Telefone</th>
-                <th>Email</th>
-                <th>Ações</th>
             </tr>
         </thead>
         <tbody>
             {% for organizacao in organizacoes %}
             <tr>
-                <td>{{ organizacao.id }}</td>
-                <td>{{ organizacao.nome }}</td>
-                <td>{{ organizacao.cnpj }}</td>
-                <td>{{ organizacao.endereco }}</td>
-                <td>{{ organizacao.telefone }}</td>
-                <td>{{ organizacao.email }}</td>
+                <td>{{ <organizacao class="id">ID</organizacao> }}</td>
+                <td>{{ <organizacao class="nome_departamento">Nome do Departamento</organizacao> }}</td>
+                <td>{{ <organizacao class="responsavel">Responsável</organizacao> }}</td>
+                <td>{{ <organizacao class="telefone_departamento">Telefone do Departamento</organizacao> }}</td>
                 <td>
                     <a href="{{ url_for('routes.update_organizacao', id=organizacao.id) }}">Editar</a>
                     <a href="{{ url_for('routes.delete_organizacao', id=organizacao.id) }}">Deletar</a>
