@@ -87,15 +87,15 @@
             </tr>
         </thead>
         <tbody>
-            {% for organizacao in organizacoes %}
+            {% for org in organizacoes %}
             <tr>
-                <td>{{ organizacao.id }}</td>
-                <td>{{ organizacao.nome_departamento }}</td>
-                <td>{{ organizacao.responsavel }}</td>
-                <td>{{ organizacao.telefone_departamento }}</td>
+                <td>{{ org.id }}</td>
+                <td>{{ org.nome_departamento }}</td>
+                <td>{{ org.responsavel }}</td>
+                <td>{{ org.telefone_departamento }}</td>
                 <td>
-                    <a href="{{ url_for('routes.update_organizacao', id=organizacao.id) }}" class="button">Editar</a>
-                    <a href="{{ url_for('routes.delete_organizacao', id=organizacao.id) }}" class="button">Deletar</a>
+                    <a href="{{ url_for('routes.update_organizacao', id=org.id) }}" class="button">Editar</a>
+                    <a href="{{ url_for('routes.delete_organizacao', id=org.id) }}" class="button">Deletar</a>
                 </td>
             </tr>
             {% else %}

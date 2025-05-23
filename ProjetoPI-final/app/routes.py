@@ -530,10 +530,10 @@ def listar_organizacao():
     db = get_db()
     cursor = db.cursor(dictionary=True)
     cursor.execute("SELECT * FROM organizacao")
-    organizacao = cursor.fetchall()
+    organizacoes = cursor.fetchall()
     cursor.close()
 
-    return render_template('listar_organizacao.html', organizacao=organizacao)
+    return render_template('listar_organizacao.html', organizacoes=organizacoes)
 
 # Rota para atualizar um registro de organização existente
 
