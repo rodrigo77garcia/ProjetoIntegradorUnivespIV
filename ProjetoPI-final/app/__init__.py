@@ -3,6 +3,7 @@ from .extensions import db, migrate
 from dotenv import load_dotenv
 import os
 from sqlalchemy import inspect
+from flask_migrate import upgrade
 
 
 def create_app():
@@ -45,13 +46,12 @@ def create_app():
                 print("Tabelas criadas com sucesso.")
             else:
                 print("Tabelas encontradas. Aplicando migrações, se necessário.")
-                from flask_migrate import upgrade
                 upgrade()
                 print("Migrações aplicadas com sucesso.")
         except Exception as e:
             print(f"Erro ao criar tabelas: {e}")
 
-        # Registre seus blueprints aqui 👇
+        
         from .routes import bp as routes_bp
         app.register_blueprint(routes_bp, url_prefix='/')
 
