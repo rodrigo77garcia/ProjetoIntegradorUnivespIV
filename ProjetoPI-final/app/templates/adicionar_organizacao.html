@@ -70,29 +70,30 @@
         .button-container a.button:hover {
             background: linear-gradient(to right, #0056b3, #003580);
         }
+        .button-voltar {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #0056b3;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h2>Adicionar Organização</h2>
         <form method="POST" action="{{ url_for('routes.add_organizacao') }}">
-            <label for="nome">Nome:</label>
-            <input type="text" id="nome" name="nome" required>
+            <label for="nome">Nome do Departamento:</label>
+            <input type="text" id="nome_departamento" name="nome_departamento" required maxlength="50">
             
-            <label for="cnpj">CNPJ:</label>
-            <input type="text" id="cnpj" name="cnpj">
+            <label for="cnpj">Responsável:</label>
+            <input type="text" id="responsavel" name="responsavel" required maxlength="50">
             
-            <label for="endereco">Endereço:</label>
-            <textarea id="endereco" name="endereco" rows="3"></textarea>
-            
-            <label for="telefone">Telefone:</label>
-            <input type="text" id="telefone" name="telefone">
-            
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email">
-
-            <label for="descricao">Descrição:</label>
-            <input type="text" id="descricao" name="descricao">
+            <label for="endereco">Telefone:</label>
+            <input id="telefone_departamento" name="telefone_departamento" type="text" required maxlength="15">
             
             <button type="submit">Adicionar Organização</button>
         </form>

@@ -495,22 +495,21 @@ def teardown_request(exception):
 @bp.route('/add_organizacao', methods=['GET', 'POST'])
 def add_organizacao():
     if request.method == 'POST':
-        nome = request.form.get('nome')
-        cnpj = request.form.get('cnpj')
-        endereco = request.form.get('endereco')
-        telefone = request.form.get('telefone')
-        email = request.form.get('email')
         descricao = request.form.get('descricao')
-        
+        valor = request.form.get('valor')
+        data_str = request.form.get('data')
+
+        data = datetime.strptime(data_str, '%Y-%m-%d') if data_str else None
+
         db = get_db()
         cursor = db.cursor()
 
         query = """
-        INSERT INTO organizacao (nome, cnpj, endereco, telefone, email, descricao)
-        VALUES (%s, %s, %s, %s, %s, %s)
+        INSERT INTO organizacao (descricao, valor, data)
+        VALUES (%s, %s, %s)
         """
         try:
-            cursor.execute(query, (nome, cnpj, endereco, telefone, email, descricao))
+            cursor.execute(query, (descricao, valor, data))
             db.commit()
         except Exception as e:
             db.rollback()
