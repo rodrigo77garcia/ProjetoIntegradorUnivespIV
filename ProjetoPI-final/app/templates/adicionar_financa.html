@@ -76,6 +76,16 @@
             border: 1px solid #c3e6cb;
             border-radius: 5px;
         }
+        .button-voltar {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #0056b3;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
     </style>
 </head>
 <body>
@@ -120,6 +130,7 @@
             <div class="buttons">
                 <button type="submit">Salvar</button>
                 <a href="{{ url_for('routes.listar_financas') }}">Cancelar</a>
+                <a href="{{ url_for('routes.index') }}" class="button">Voltar para Painel de Gerenciamento</a>
             </div>
         </form>
     </div>

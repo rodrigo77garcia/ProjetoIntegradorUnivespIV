@@ -56,6 +56,16 @@
         .button-group a:hover {
             background-color: #5a6268;
         }
+        .button-voltar {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #0056b3;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
     </style>
 </head>
 <body>
@@ -68,6 +78,7 @@
             <div class="button-group">
                 <button type="submit">Confirmar</button>
                 <a href="{{ url_for('routes.listar_ferramentas') }}">Cancelar</a>
+                <a href="{{ url_for('routes.index') }}" class="button">Voltar para Painel de Gerenciamento</a>
             </div>
         </form>
     </div>
