@@ -10,70 +10,72 @@
             background-color: #f4f4f9;
             margin: 0;
             padding: 0;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+            align-items: start; /* Alinha tudo no topo */
+            flex-direction: column;
+            text-align: center;
         }
+
         h1 {
             color: #333;
-        }
-        form {
-            background: #fff;
-            padding: 20px;
-            margin: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            width: 300px;
-        }
-        label {
-            display: block;
-            margin-bottom: 6px;
-        }
-        input[type="text"], input[type="date"], textarea {
-            width: calc(100% - 22px);
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-        button {
-            display: block;
             width: 100%;
-            padding: 10px;
-            border: none;
-            background: #007bff;
-            color: #fff;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        button:hover {
-            background: #0056b3;
-        }
-        .button-container {
-            text-align: center;
             margin-top: 20px;
         }
+
+        table {
+            width: 90%;
+            max-width: 800px;
+            border-collapse: collapse;
+            margin: 20px auto;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .button-container {
+            margin: 20px auto;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
         .button-container a.button {
             display: inline-block;
             padding: 10px 20px;
-            margin-top: 10px;
-            border: none;
+            text-decoration: none;
             background: linear-gradient(to right, #007bff, #0056b3);
             color: white;
             border-radius: 4px;
-            cursor: pointer;
-            text-decoration: none;
-            font-size: 16px;
             transition: background 0.3s;
+            font-size: 16px;
         }
+
         .button-container a.button:hover {
             background: linear-gradient(to right, #0056b3, #003580);
         }
     </style>
 </head>
 <body>
+
     <h1>Lista de Organização</h1>
+
     <table>
         <thead>
             <tr>
@@ -81,6 +83,7 @@
                 <th>Nome do Departamento</th>
                 <th>Responsável</th>
                 <th>Telefone</th>
+                <th>Ações</th>
             </tr>
         </thead>
         <tbody>
@@ -91,16 +94,22 @@
                 <td>{{ organizacao.responsavel }}</td>
                 <td>{{ organizacao.telefone_departamento }}</td>
                 <td>
-                    <a href="{{ url_for('routes.update_organizacao', id=organizacao.id) }}">Editar</a>
-                    <a href="{{ url_for('routes.delete_organizacao', id=organizacao.id) }}">Deletar</a>
+                    <a href="{{ url_for('routes.update_organizacao', id=organizacao.id) }}" class="button">Editar</a>
+                    <a href="{{ url_for('routes.delete_organizacao', id=organizacao.id) }}" class="button">Deletar</a>
                 </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="5">Nenhuma organização encontrada.</td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
+
     <div class="button-container">
         <a href="{{ url_for('routes.add_organizacao') }}" class="button">Adicionar Nova Organização</a>
         <a href="{{ url_for('routes.index') }}" class="button">Voltar para Painel de Gerenciamento</a>
     </div>
+
 </body>
 </html>
