@@ -109,6 +109,7 @@
                         <div class="button-group">
                             <a href="{{ url_for('routes.update_cliente', id=cliente.id) }}">Editar</a>
                             <a href="{{ url_for('routes.delete_cliente', id=cliente.id) }}" onclick="confirmDeletion(event, this.href)">Deletar</a>
+                            <a href="{{ url_for('routes.index') }}" class="button">Voltar para Painel de Gerenciamento</a>
                         </div>
                     </td>
                 </tr>

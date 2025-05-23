@@ -42,6 +42,7 @@
                 <li><a href="{{ url_for('routes.financas') }}">Finanças</a></li>
                 <li><a href="{{ url_for('routes.clientes') }}">Clientes</a></li>
                 <li><a href="{{ url_for('routes.organizacao') }}">Organização</a></li>
+                <li><a href="{{ url_for('routes.index') }}">Voltar para Painel de Gerenciamento</a></li>
             </ul>
         </nav>
     </header>
@@ -49,7 +50,7 @@
     <main>
         <h2>Organização de Recursos</h2>
         <p>Aqui você pode gerenciar a organização de recursos da sua empresa.</p>
-        <a href="#" onclick="redirecionarParaAdicionar('organizacao')">Adicionar Recurso na Organização</a>
+        <button type="button" onclick="redirecionarParaAdicionar('organizacao')">Adicionar Recurso na Organização</button>
         
         <!-- Aqui você pode adicionar mais informações ou tabelas conforme a necessidade -->
     </main>
