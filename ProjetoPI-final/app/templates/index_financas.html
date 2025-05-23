@@ -88,30 +88,5 @@
         <button onclick="window.location.href='/delete_financa/1'">Deletar Entrada</button>
         <button onclick="window.location.href='/'">Voltar para Painel de Gerenciamento</button>
     </div>
-
-    <h2>Lista de Entradas Financeiras</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Descrição</th>
-                <th>Valor</th>
-                <th>Data</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for financa in financas %}
-            <tr>
-                <td>{{ financa.descricao }}</td>
-                <td>{{ financa.valor }}</td>
-                <td>{{ financa.data }}</td>
-                <td>
-                    <a href="{{ url_for('routes.update_financa', id=financa.id) }}">Editar</a>
-                    <a href="{{ url_for('routes.delete_financa', id=financa.id) }}">Deletar</a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
 </body>
 </html>
