@@ -91,33 +91,5 @@
         <button onclick="window.location.href='/delete_cliente/1'">Deletar Cliente</button>
         <button onclick="window.location.href='/'">Voltar para Painel de Gerenciamento</button>
     </div>
-
-    <h2>Lista de Clientes</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Nome</th>
-                <th>Email</th>
-                <th>Telefone</th>
-                <th>Endereço</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for cliente in clientes %}
-            <tr>
-                <td>{{ cliente.nome }}</td>
-                <td>{{ cliente.email }}</td>
-                <td>{{ cliente.telefone }}</td>
-                <td>{{ cliente.endereco }}</td>
-                <td>
-                    <a href="{{ url_for('routes.update_cliente', id=cliente.id) }}">Editar</a>
-                    <a href="{{ url_for('routes.delete_cliente', id=cliente.id) }}">Deletar</a>
-                    
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
 </body>
 </html>
